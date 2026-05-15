@@ -1,38 +1,31 @@
-import { Bell, Search } from "lucide-react";
+import React from "react";
 
-export default function Header({ title }) {
+const Header = () => {
   return (
-    <header className="flex items-center justify-between mb-6">
-      {/* 🔹 Left */}
+    <header className="bg-white p-[14px_22px] flex items-center justify-between border-b border-gray-100 gap-3 shrink-0">
       <div>
-        <h2 className="text-2xl font-semibold text-gray-800">{title}</h2>
-        <p className="text-sm text-gray-500">Welcome back 👋</p>
+        <h1 className="text-[18px] font-['Poppins'] font-semibold text-[#525252]">
+          Ringkasan Toko
+        </h1>
+        <p className="text-[12px] text-gray-400">
+          Coffee is brewing, James! Siap untuk shift pagi?
+        </p>
       </div>
 
-      {/* 🔹 Right */}
-      <div className="flex items-center gap-4">
-        {/* Search */}
-        <div className="hidden md:flex items-center bg-gray-100 px-3 py-2 rounded-lg">
-          <Search size={16} className="text-gray-500" />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="bg-transparent outline-none ml-2 text-sm w-40"
-          />
-        </div>
-
-        {/* Notification */}
-        <button className="relative p-2 rounded-lg hover:bg-gray-100 transition">
-          <Bell size={18} />
-          <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-        </button>
-
-        {/* Profile */}
-        <div className="flex items-center gap-2 cursor-pointer">
-          <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-          <span className="hidden md:block text-sm font-medium">Admin</span>
-        </div>
+      <div className="bg-gray-100 rounded-xl px-[14px] py-[8px] flex items-center gap-2 text-gray-400 text-[13px] flex-1 max-w-[280px]">
+        <i className="ti ti-search"></i>
+        <input
+          type="text"
+          placeholder="Cari transaksi atau stok..."
+          className="bg-transparent border-none outline-none w-full text-[#525252]"
+        />
       </div>
+
+      <button className="bg-[#00403C] text-white rounded-lg px-4 py-2 font-semibold text-[13px] flex items-center gap-[6px] whitespace-nowrap">
+        <i className="ti ti-plus"></i> Transaksi Baru
+      </button>
     </header>
   );
-}
+};
+
+export default Header;

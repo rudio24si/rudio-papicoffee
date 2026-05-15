@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "name": "Andi Herlambang",
+    "email": "andi.h@email.com",
+    "points": 1250,
+    "status": "Platinum",
+    "visits": 24
+  },
+  {
+    "id": 2,
+    "name": "Siti Sarah",
+    "email": "sarah.siti@email.com",
+    "points": 850,
+    "status": "Gold",
+    "visits": 15
+  },
+  {
+    "id": 3,
+    "name": "Budi Santoso",
+    "email": "budi.san@email.com",
+    "points": 420,
+    "status": "Silver",
+    "visits": 8
+  },
+  {
+    "id": 4,
+    "name": "Rina Wijaya",
+    "email": "rina.w@email.com",
+    "points": 2100,
+    "status": "Platinum",
+    "visits": 42
+  },
+  {
+    "id": 5,
+    "name": "Dedi Kurniawan",
+    "email": "dedi.k@outlook.com",
+    "points": 150,
+    "status": "Silver",
+    "visits": 3
+  },
+  {
+    "id": 6,
+    "name": "Maya Indah",
+    "email": "maya.indah@gmail.com",
+    "points": 920,
+    "status": "Gold",
+    "visits": 18
+  },
+  {
+    "id": 7,
+    "name": "Eko Prasetyo",
+    "email": "eko.p@perusahaan.id",
+    "points": 3100,
+    "status": "Platinum",
+    "visits": 56
+  },
+  {
+    "id": 8,
+    "name": "Dewi Lestari",
+    "email": "dewi.les@email.com",
+    "points": 600,
+    "status": "Gold",
+    "visits": 12
+  },
+  {
+    "id": 9,
+    "name": "Ferry Salim",
+    "email": "ferry.s@yahoo.com",
+    "points": 50,
+    "status": "Silver",
+    "visits": 1
+  },
+  {
+    "id": 10,
+    "name": "Gita Gutawa",
+    "email": "gita.g@music.com",
+    "points": 1850,
+    "status": "Platinum",
+    "visits": 35
+  },
+  {
+    "id": 11,
+    "name": "Hendra Setiawan",
+    "email": "hendra.s@badminton.id",
+    "points": 770,
+    "status": "Gold",
+    "visits": 14
+  },
+  {
+    "id": 12,
+    "name": "Irfan Bachdim",
+    "email": "irfan.b@bola.com",
+    "points": 300,
+    "status": "Silver",
+    "visits": 5
+  },
+  {
+    "id": 13,
+    "name": "Jessica Mila",
+    "email": "jessica.m@artist.id",
+    "points": 1400,
+    "status": "Platinum",
+    "visits": 28
+  },
+  {
+    "id": 14,
+    "name": "Kevin Sanjaya",
+    "email": "kevin.s@minions.id",
+    "points": 980,
+    "status": "Gold",
+    "visits": 20
+  },
+  {
+    "id": 15,
+    "name": "Luna Maya",
+    "email": "luna.m@fashion.com",
+    "points": 2500,
+    "status": "Platinum",
+    "visits": 48
+  },
+  {
+    "id": 16,
+    "name": "Nadiem Makarim",
+    "email": "nadiem.m@tech.id",
+    "points": 550,
+    "status": "Gold",
+    "visits": 10
+  },
+  {
+    "id": 17,
+    "name": "Olivia Jensen",
+    "email": "olivia.j@email.com",
+    "points": 120,
+    "status": "Silver",
+    "visits": 2
+  },
+  {
+    "id": 18,
+    "name": "Putri Marino",
+    "email": "putri.m@film.id",
+    "points": 1100,
+    "status": "Platinum",
+    "visits": 22
+  },
+  {
+    "id": 19,
+    "name": "Raffi Ahmad",
+    "email": "raffi.a@rans.com",
+    "points": 5000,
+    "status": "Platinum",
+    "visits": 120
+  },
+  {
+    "id": 20,
+    "name": "Sule Sutisna",
+    "email": "sule.p@komedi.id",
+    "points": 480,
+    "status": "Silver",
+    "visits": 9
+  }
+]

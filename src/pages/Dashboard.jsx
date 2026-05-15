@@ -1,150 +1,195 @@
-import {
-  DollarSign,
-  ShoppingBag,
-  Flame,
-  Star,
-  Download,
-  Eye,
-} from "lucide-react";
+import React from "react";
 
-export default function Dashboard() {
-  const cards = [
-    {
-      title: "Total Sales",
-      value: "$42,850",
-      icon: DollarSign,
-      extra: "+12.5%",
-    },
-    {
-      title: "Active Orders",
-      value: "184",
-      icon: ShoppingBag,
-      extra: "Normal",
-    },
-    {
-      title: "Popular Blend",
-      value: "Velvet Espresso",
-      icon: Flame,
-      extra: "Trending",
-    },
-    {
-      title: "Customer Feedback",
-      value: "98 Positive",
-      icon: Star,
-      extra: "4.9 Avg",
-    },
-  ];
+const StatCard = ({ label, value, growth, growthType }) => (
+  <div
+    className={`bg-white rounded-xl p-[18px] border border-gray-100 flex flex-col justify-between ${growthType === "primary" ? "bg-[#00403C]" : ""}`}
+  >
+    <div>
+      <p
+        className={`text-[11px] font-medium mb-[6px] ${growthType === "primary" ? "text-[#B6D76D]" : "text-[#737373]"}`}
+      >
+        {label}
+      </p>
+      <p
+        className={`text-[22px] font-bold ${growthType === "primary" ? "text-white" : "text-[#00403C]"}`}
+      >
+        {value}
+      </p>
+    </div>
+    {growth && (
+      <p
+        className={`text-[11px] font-semibold mt-2 ${
+          growthType === "up"
+            ? "text-[#00AAA6]"
+            : growthType === "alert"
+              ? "text-red-500"
+              : growthType === "primary"
+                ? "text-[#C0FCF8]"
+                : "text-[#A68BFF]"
+        }`}
+      >
+        {growth}
+      </p>
+    )}
+  </div>
+);
 
+const Dashboard = () => {
   return (
-    <div className="space-y-8">
-      {/* 🔥 SUMMARY CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {cards.map((card, i) => {
-          const Icon = card.icon;
-          return (
-            <div
-              key={i}
-              className="bg-white p-5 rounded-xl shadow hover:shadow-md transition"
-            >
-              <div className="flex justify-between mb-4">
-                <div className="p-2 bg-gray-100 rounded-lg">
-                  <Icon size={18} />
+    <div className="flex-1 overflow-y-auto p-[18px] bg-[#F5F5F5]">
+      <div className="grid grid-cols-4 gap-[14px]">
+        {/* ROW 1: STATS */}
+        <StatCard
+          label="Omzet Hari Ini"
+          value="Rp 4.280.000"
+          growth="▲ +12% dari kemarin"
+          growthType="up"
+        />
+        <StatCard
+          label="Total Cup Terjual"
+          value="142"
+          growth="Peak: 09:00 AM"
+          growthType="info"
+        />
+        <StatCard
+          label="Stok Susu (L)"
+          value="4.2 L"
+          growth="⚠ Perlu restock"
+          growthType="alert"
+        />
+        <StatCard
+          label="Member Baru"
+          value="12"
+          growth="Target: 20/hari"
+          growthType="primary"
+        />
+
+        {/* ROW 2: CHART (SPAN 2) */}
+        <div className="col-span-2 bg-white rounded-xl p-[18px] border border-gray-100 flex flex-col justify-between">
+          <div className="flex justify-between items-center mb-2">
+            <p className="font-['Poppins'] font-semibold text-[14px] text-[#00403C]">
+              Tren Penjualan Per Jam
+            </p>
+            <div className="flex items-center gap-[6px]">
+              <span className="w-[7px] h-[7px] bg-[#00AAA6] rounded-full animate-pulse"></span>
+              <span className="text-[10px] text-[#00AAA6] font-bold uppercase">
+                Live Updating
+              </span>
+            </div>
+          </div>
+
+          {/* BAR CHART CONTAINER */}
+          <div className="h-[140px] flex items-end justify-between gap-2 px-1 relative">
+            {[30, 65, 95, 70, 50, 40, 55].map((h, i) => (
+              <div
+                key={i}
+                className="flex-1 flex flex-col items-center gap-2 h-full justify-end group"
+              >
+                {/* TOOLTIP ON HOVER */}
+                <div className="absolute bottom-[100%] mb-2 bg-[#00403C] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity z-10 whitespace-nowrap pointer-events-none">
+                  Rp 420rb · {h} cup
                 </div>
-                <span className="text-xs text-gray-500">{card.extra}</span>
+                {/* THE BAR */}
+                <div className="w-full bg-[#f0f9f8] rounded-t-md overflow-hidden h-full flex items-end">
+                  <div
+                    style={{ height: `${h}%` }}
+                    className={`w-full transition-all duration-700 ease-out ${i === 2 ? "bg-[#00403C]" : "bg-[#C0FDF9] group-hover:bg-[#00AAA6]"}`}
+                  ></div>
+                </div>
+                <span className="text-[9px] text-gray-400 font-medium">
+                  0{7 + i}:00
+                </span>
               </div>
-
-              <p className="text-sm text-gray-500">{card.title}</p>
-              <h3 className="text-lg font-semibold">{card.value}</h3>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* 📊 CHART + POPULAR */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Chart */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow">
-          <div className="flex justify-between mb-4">
-            <h3 className="font-semibold">Revenue Growth</h3>
-            <select className="text-sm border rounded px-2 py-1">
-              <option>Last 7 Days</option>
-              <option>Last 30 Days</option>
-            </select>
-          </div>
-
-          {/* Dummy Chart */}
-          <div className="h-40 flex items-center justify-center text-gray-400">
-            Chart here 📈
+            ))}
           </div>
         </div>
 
-        {/* Popular */}
-        <div className="bg-white p-6 rounded-xl shadow">
-          <h3 className="font-semibold mb-4">Popular Blends</h3>
-
-          <div className="space-y-4">
-            <div className="flex justify-between">
-              <span>Velvet Espresso</span>
-              <span className="text-sm text-gray-500">1.2k</span>
+        {/* PERSEDIAAN BIJI KOPI */}
+        <div className="bg-white rounded-xl p-[18px] border border-gray-100">
+          <p className="font-['Poppins'] font-semibold text-[14px] text-[#00403C] mb-4">
+            Persediaan Biji Kopi
+          </p>
+          <div className="flex flex-col gap-3 text-[12px]">
+            <div className="flex justify-between border-b border-gray-50 pb-1 text-[#737373]">
+              <span>House Blend</span>
+              <b className="text-[#00403C]">4.2 kg</b>
             </div>
-
-            <div className="flex justify-between">
-              <span>Golden Honey</span>
-              <span className="text-sm text-gray-500">840</span>
+            <div className="flex justify-between border-b border-gray-50 pb-1 text-[#737373]">
+              <span>Arabica Gayo</span>
+              <b className="text-[#00403C]">1.5 kg</b>
+            </div>
+            <div className="flex justify-between text-red-500">
+              <span>Decaf</span>
+              <b>0.2 kg</b>
             </div>
           </div>
-
-          <button className="mt-4 w-full border py-2 rounded text-sm hover:bg-gray-100">
-            View Inventory
-          </button>
-        </div>
-      </div>
-
-      {/* 📋 TABLE */}
-      <div className="bg-white rounded-xl shadow overflow-hidden">
-        <div className="p-4 flex justify-between items-center border-b">
-          <h3 className="font-semibold">Recent Orders</h3>
-
-          <button className="flex items-center gap-2 text-sm">
-            <Download size={16} />
-            Export
-          </button>
         </div>
 
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-500">
-            <tr>
-              <th className="p-3 text-left">Order</th>
-              <th className="p-3 text-left">Customer</th>
-              <th className="p-3 text-left">Total</th>
-              <th className="p-3 text-left">Status</th>
-              <th className="p-3 text-left"></th>
-            </tr>
-          </thead>
+        {/* MENU TERLARIS (VERTICAL SPAN) */}
+        <div className="row-span-2 bg-white rounded-xl p-[18px] border border-gray-100">
+          <p className="font-['Poppins'] font-semibold text-[14px] text-[#00403C] mb-4">
+            Menu Terlaris
+          </p>
+          {[
+            { img: "🧊", name: "Aren Latte", sold: "52 cups" },
+            { img: "☕", name: "Americano", sold: "38 cups" },
+            { img: "🍵", name: "Matcha Berry", sold: "21 cups" },
+            { img: "🥐", name: "Croissant", sold: "15 pcs" },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="flex items-center gap-3 py-3 border-b border-gray-50 last:border-none"
+            >
+              <div className="w-10 h-10 bg-[#C0FCF8] rounded-lg flex items-center justify-center text-lg">
+                {item.img}
+              </div>
+              <div>
+                <p className="font-bold text-[13px] text-[#525252]">
+                  {item.name}
+                </p>
+                <p className="text-[11px] text-gray-400">{item.sold} terjual</p>
+              </div>
+            </div>
+          ))}
+        </div>
 
-          <tbody>
-            <tr className="border-t hover:bg-gray-50">
-              <td className="p-3 font-medium">#PC-2094</td>
-              <td className="p-3">Julianna</td>
-              <td className="p-3">$124</td>
-              <td className="p-3 text-green-600">Shipped</td>
-              <td className="p-3">
-                <Eye size={16} />
-              </td>
-            </tr>
-
-            <tr className="border-t hover:bg-gray-50">
-              <td className="p-3 font-medium">#PC-2093</td>
-              <td className="p-3">Marcus</td>
-              <td className="p-3">$56</td>
-              <td className="p-3 text-yellow-600">Processing</td>
-              <td className="p-3">
-                <Eye size={16} />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        {/* TRANSAKSI TERAKHIR (HORIZONTAL SPAN) */}
+        <div className="col-span-3 bg-white rounded-xl p-[18px] border border-gray-100">
+          <p className="font-['Poppins'] font-semibold text-[14px] text-[#00403C] mb-4">
+            Transaksi Terakhir
+          </p>
+          <table className="w-full text-left text-[12px]">
+            <thead>
+              <tr className="text-[11px] text-gray-400 uppercase border-b border-gray-100">
+                <th className="pb-3 font-semibold px-2">ID Order</th>
+                <th className="pb-3 font-semibold">Menu Pesanan</th>
+                <th className="pb-3 font-semibold">Waktu</th>
+                <th className="pb-3 font-semibold">Harga</th>
+                <th className="pb-3 font-semibold text-right px-2">Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-50">
+              {[1024, 1023, 1022].map((id) => (
+                <tr key={id} className="hover:bg-gray-50 transition-colors">
+                  <td className="py-4 font-bold px-2">#{id}</td>
+                  <td className="py-4 text-[#737373]">
+                    Aren Latte, Almond Croissant
+                  </td>
+                  <td className="py-4 text-gray-400">10:42 AM</td>
+                  <td className="py-4 font-bold text-[#00403C]">Rp 65.000</td>
+                  <td className="py-4 text-right px-2">
+                    <span className="bg-[#B6D76D] text-[#00403C] px-3 py-1 rounded-full text-[10px] font-bold uppercase">
+                      Lunas
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;
