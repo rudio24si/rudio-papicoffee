@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "./Button";
 
 const Header = () => {
   return (
@@ -21,9 +22,7 @@ const Header = () => {
         />
       </div>
 
-      <button className="bg-[#00403C] text-white rounded-lg px-4 py-2 font-semibold text-[13px] flex items-center gap-[6px] whitespace-nowrap">
-        <i className="ti ti-plus"></i> Transaksi Baru
-      </button>
+      <Button>Transaksi Baru</Button>
     </header>
   );
 };
