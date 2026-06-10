@@ -17,7 +17,7 @@ export default function RecentTransactionsCard() {
       </p>
 
       {/* 2. Gunakan komponen Table shadcn */}
-      <table className="text-[12px]">
+      <Table className="text-[12px]">
         <TableHeader>
           <TableRow className="text-[11px] text-gray-400 uppercase hover:bg-transparent">
             <TableHead className="w-[100px] font-semibold text-gray-400 h-10 px-2">
@@ -60,7 +60,7 @@ export default function RecentTransactionsCard() {
             </TableRow>
           ))}
         </TableBody>
-      </table>
+      </Table>
     </div>
   );
 }
