@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "./Button";
+import { Input } from "./ui/input";
 
 const Header = () => {
   return (
@@ -13,13 +14,9 @@ const Header = () => {
         </p>
       </div>
 
-      <div className="bg-gray-100 rounded-xl px-[14px] py-[8px] flex items-center gap-2 text-gray-400 text-[13px] flex-1 max-w-[280px]">
+      <div className="rounded-xl px-[14px] py-[8px] flex items-center gap-2 text-gray-400 text-[13px] flex-1 max-w-[280px]">
         <i className="ti ti-search"></i>
-        <input
-          type="text"
-          placeholder="Cari transaksi atau stok..."
-          className="bg-transparent border-none outline-none w-full text-[#525252]"
-        />
+        <Input placeholder="Cari transaksi atau stok..." />
       </div>
 
       <Button>Transaksi Baru</Button>
