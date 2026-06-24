@@ -1,20 +1,25 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { userAPI } from "../services/userAPI"; // ← Import file service API
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  // 1. State untuk form
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
 
-  // 2. State untuk loading dan error
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const usernameRef = useRef(null);
+
+  useEffect(() => {
+    usernameRef.current.focus();
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -28,18 +33,35 @@ export default function Login() {
     setLoading(true);
     setError("");
 
-    setTimeout(() => {
-      if (formData.email === "rudio" && formData.password === "rudio") {
+    try {
+      const loggedInUser = await userAPI.loginUser(
+        formData.username,
+        formData.password,
+      );
+
+      // ✅ Langsung cek objectnya, bukan .length
+      if (loggedInUser) {
         localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("user", JSON.stringify({ name: "Rudio Admin" }));
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            name: loggedInUser.username,
+            email: loggedInUser.email,
+            role: loggedInUser.role,
+          }),
+        );
 
         setLoading(false);
         navigate("/");
       } else {
-        setError("Username atau Password salah! (Hint: rudio)");
+        setError("Username atau Password salah!");
         setLoading(false);
+        usernameRef.current.focus();
       }
-    }, 1000);
+    } catch (err) {
+      setError(err.message || "Gagal terhubung ke server database.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -63,7 +85,7 @@ export default function Login() {
 
         {/* Notifikasi Error */}
         {error && (
-          <div className="mb-4 p-3 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm flex items-center gap-2 animate-bounce-short">
+          <div className="mb-4 p-3 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm flex items-center gap-2">
             <AlertCircle size={16} />
             {error}
           </div>
@@ -76,13 +98,15 @@ export default function Login() {
               Username
             </label>
             <input
+              ref={usernameRef}
               type="text"
               name="username"
               required
+              disabled={loading}
               value={formData.username}
               onChange={handleChange}
               placeholder="Username"
-              className="w-full mt-1 px-4 py-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-black outline-none transition"
+              className="w-full mt-1 px-4 py-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-black outline-none transition disabled:bg-gray-200"
             />
           </div>
 
@@ -100,10 +124,11 @@ export default function Login() {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 required
+                disabled={loading}
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="w-full px-4 py-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-black outline-none transition"
+                className="w-full px-4 py-2 border rounded-lg bg-gray-50 focus:ring-2 focus:ring-black outline-none transition disabled:bg-gray-200"
               />
 
               <button
@@ -133,7 +158,7 @@ export default function Login() {
         </form>
 
         <p className="text-center text-sm mt-6 text-gray-500">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <Link
             to="/register"
             className="font-semibold text-black hover:underline"

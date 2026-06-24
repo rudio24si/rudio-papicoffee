@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // ← tambah useEffect
 import {
   Users,
   UserPlus,
@@ -7,21 +7,44 @@ import {
   MoreHorizontal,
   Download,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom"; // Tambahkan ini
+import { useNavigate } from "react-router-dom";
 import membersData from "../data/members.json";
 import Button from "../components/Button";
 import MemberTable from "../components/MemberTable";
 
 export default function Members() {
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate(); // Inisialisasi navigate
+  const navigate = useNavigate();
 
-  // Fungsi Filter Pencarian
-  const filteredMembers = membersData.filter(
-    (member) =>
-      member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      member.email.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const [members, setMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const timer = setTimeout(() => {
+      setMembers(membersData);
+      setLoading(false);
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const [filteredMembers, setFilteredMembers] = useState([]);
+
+  useEffect(() => {
+    const result = members.filter(
+      (member) =>
+        member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        member.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredMembers(result);
+  }, [searchTerm, members]); 
+
+  const avgPoints =
+    members.length > 0
+      ? Math.round(members.reduce((sum, m) => sum + (m.points || 0), 0) / members.length)
+      : 0;
 
   return (
     <div className="p-[20px] space-y-6 bg-[#F5F5F5] min-h-full">
@@ -32,7 +55,7 @@ export default function Members() {
             Database Member
           </h2>
           <p className="text-sm text-[#737373]">
-            Mengelola {membersData.length} total pelanggan setia Papi Coffee.
+            Mengelola {members.length} total pelanggan setia Papi Coffee.
           </p>
         </div>
 
@@ -57,7 +80,7 @@ export default function Members() {
               Total Members
             </p>
             <p className="text-xl font-bold text-[#00403C]">
-              {membersData.length} Pelanggan
+              {loading ? "..." : `${members.length} Pelanggan`}
             </p>
           </div>
         </div>
@@ -70,7 +93,9 @@ export default function Members() {
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
               Avg. Points
             </p>
-            <p className="text-xl font-bold text-[#00403C]">1.240 pts</p>
+            <p className="text-xl font-bold text-[#00403C]">
+              {loading ? "..." : `${avgPoints.toLocaleString()} pts`}
+            </p>
           </div>
         </div>
 
@@ -87,14 +112,24 @@ export default function Members() {
         </div>
       </div>
 
-      {/* Table Section */}
-      <MemberTable
-        members={filteredMembers}
-        totalMembers={membersData.length}
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        onRowClick={(id) => navigate(`/members/${id}`)}
-      />
+      {/* Loading State */}
+      {loading ? (
+        <div className="bg-white rounded-xl p-12 flex items-center justify-center shadow-sm">
+          <div className="text-center space-y-3">
+            <div className="w-8 h-8 border-4 border-[#00AAA6] border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p className="text-sm text-[#737373]">Memuat data member...</p>
+          </div>
+        </div>
+      ) : (
+        /* Table Section */
+        <MemberTable
+          members={filteredMembers}
+          totalMembers={members.length}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          onRowClick={(id) => navigate(`/members/${id}`)}
+        />
+      )}
     </div>
   );
 }

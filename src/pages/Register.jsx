@@ -1,13 +1,63 @@
-import { Link } from "react-router-dom";
-import { User, Mail, Lock, ArrowRight } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  User,
+  Mail,
+  Lock,
+  ArrowRight,
+  Loader2,
+  AlertCircle,
+} from "lucide-react";
+import { useState } from "react";
+import { userAPI } from "../services/userAPI";
 
 export default function Register() {
+  const navigate = useNavigate();
+
+  // State untuk form data, loading, dan error
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccessMsg("");
+
+    try {
+      // Menembak data pendaftaran langsung ke Supabase
+      await userAPI.registerUser(formData);
+
+      setSuccessMsg("Account created successfully! Redirecting to login...");
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/login");
+      }, 2000);
+    } catch (err) {
+      setError(
+        err.response?.data?.message || err.message || "Registration failed.",
+      );
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       {/* 🔹 LEFT (IMAGE) */}
       <div className="hidden md:flex md:w-1/2 lg:w-3/5 relative bg-black">
         <img
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBF5ppzubt9tUFcqe12catoHWsG7bn2UJjZI6mpmsBsrqoefUTvIdUKisy1SvoK0LyPYWtnt7a5WDzLzRFl57ZInoI2GwEG-HaEEVwCU08XtN2csKejAX-uzVe-JyZ8hr95AUDqNqdTdIvoHg6uV0igKe4Jqv4LFXFTw40CU33HVeyKCnpqHiMi2Qpa9hLm5z26m2F0ZNz1oC9yvTPzFFAT-GEmbesaHmlPzN-FL19nKLgFGmErCSurPbG1kvKvPpg9oUARPE9AxUY"
+          src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&q=80&w=2070"
           alt="coffee"
           className="absolute inset-0 w-full h-full object-cover opacity-70"
         />
@@ -41,16 +91,35 @@ export default function Register() {
             </p>
           </div>
 
+          {/* Notifikasi Alert */}
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm flex items-center gap-2">
+              <AlertCircle size={16} />
+              {error}
+            </div>
+          )}
+
+          {successMsg && (
+            <div className="mb-4 p-3 bg-green-50 border-l-4 border-green-500 text-green-700 text-sm">
+              {successMsg}
+            </div>
+          )}
+
           {/* FORM */}
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit}>
             {/* Name */}
             <div>
               <label className="text-sm text-gray-600">Full Name</label>
               <div className="relative mt-1">
                 <input
                   type="text"
+                  name="username"
+                  required
+                  disabled={loading}
+                  value={formData.username}
+                  onChange={handleChange}
                   placeholder="Your name"
-                  className="w-full px-4 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-black outline-none"
+                  className="w-full px-4 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-black outline-none disabled:bg-gray-100"
                 />
                 <User
                   className="absolute right-3 top-2.5 text-gray-400"
@@ -65,8 +134,13 @@ export default function Register() {
               <div className="relative mt-1">
                 <input
                   type="email"
+                  name="email"
+                  required
+                  disabled={loading}
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="you@email.com"
-                  className="w-full px-4 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-black outline-none"
+                  className="w-full px-4 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-black outline-none disabled:bg-gray-100"
                 />
                 <Mail
                   className="absolute right-3 top-2.5 text-gray-400"
@@ -81,8 +155,14 @@ export default function Register() {
               <div className="relative mt-1">
                 <input
                   type="password"
+                  name="password"
+                  required
+                  disabled={loading}
+                  value={formData.password}
+                  onChange={handleChange} // ← SEKARANG SUDAH DITAMBAHKAN DI SINI
                   placeholder="********"
-                  className="w-full px-4 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-black outline-none"
+                  minLength={8}
+                  className="w-full px-4 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-black outline-none disabled:bg-gray-100"
                 />
                 <Lock
                   className="absolute right-3 top-2.5 text-gray-400"
@@ -91,15 +171,24 @@ export default function Register() {
               </div>
               <p className="text-xs text-gray-400 mt-1">Min 8 characters</p>
             </div>
-            
 
             {/* Button */}
             <button
               type="submit"
-              className="w-full bg-black text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition"
+              disabled={loading}
+              className="w-full bg-black text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              Create Account
-              <ArrowRight size={16} />
+              {loading ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  Creating Account...
+                </>
+              ) : (
+                <>
+                  Create Account
+                  <ArrowRight size={16} />
+                </>
+              )}
             </button>
           </form>
 

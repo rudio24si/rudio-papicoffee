@@ -7,9 +7,11 @@ import AuthLayout from "./layouts/AuthLayout";
 
 import React, { Suspense } from "react";
 import Loading from "./components/Loading";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Members = React.lazy(() => import("./pages/Members"));
+const UsersPage = React.lazy(() => import("./pages/Users"));
 const MemberDetail = React.lazy(() => import("./pages/MemberDetail"));
 const Orders = React.lazy(() => import("./pages/Orders"));
 const Loyalty = React.lazy(() => import("./pages/Loyalty"));
@@ -31,6 +33,7 @@ export default function App() {
         <Routes>
           <Route element={<MainLayout />}>
             <Route index element={<Dashboard />} />
+            <Route path="users" element={<UsersPage />} />
             <Route path="members" element={<Members />} />
             <Route path="members/:id" element={<MemberDetail />} />
             <Route path="orders" element={<Orders />} />

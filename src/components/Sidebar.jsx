@@ -5,9 +5,26 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Menggunakan icon alternatif yang lebih stabil di banyak versi Tabler
+  // Ambil data user dari localStorage
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const initials = user.name
+    ? user.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : "?";
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
   const menuItems = [
     { icon: "ti-layout-dashboard", label: "Dashboard", path: "/" },
+    { icon: "ti-users-group", label: "Users", path: "/users" },
     { icon: "ti-users-group", label: "Members", path: "/members" },
     { icon: "ti-shopping-cart-copy", label: "Orders", path: "/orders" },
     { icon: "ti-gift-card", label: "Loyalty", path: "/loyalty" },
@@ -24,6 +41,7 @@ const Sidebar = () => {
 
   return (
     <aside className="w-[220px] bg-white border-r border-gray-200 flex flex-col h-screen shrink-0 z-20">
+      {/* Logo */}
       <div className="flex items-center gap-[10px] p-[22px_18px] text-[#00403C] font-['Poppins'] font-bold">
         <div className="w-[30px] h-[30px] bg-[#00403C] rounded-lg flex items-center justify-center text-white text-[14px]">
           <i className="ti ti-coffee"></i>
@@ -31,6 +49,7 @@ const Sidebar = () => {
         <span className="tracking-tight">PAPI COFFEE</span>
       </div>
 
+      {/* Menu */}
       <div className="overflow-y-auto flex-1 no-scrollbar">
         <p className="text-[10px] text-gray-400 px-[18px] py-[14px] pb-[5px] tracking-[1.2px] uppercase font-bold">
           Menu Utama
@@ -49,14 +68,12 @@ const Sidebar = () => {
                   : "text-[#737373] hover:bg-[#F0FAF9] hover:text-[#00AAA6]"
               }`}
             >
-              {/* PERHATIKAN: Saya menambahkan "ti" sebelum "${item.icon}" */}
               <i
                 className={`ti ${item.icon} text-[20px] ${isActive ? "text-[#C0FCF8]" : "opacity-70"}`}
               ></i>
               <span className={isActive ? "font-semibold" : "font-medium"}>
                 {item.label}
               </span>
-
               {item.badge && (
                 <span className="ml-auto bg-red-500 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full">
                   {item.badge}
@@ -67,15 +84,32 @@ const Sidebar = () => {
         })}
       </div>
 
-      <div className="mt-auto p-[16px_18px] bg-gray-50 flex items-center gap-[10px] border-t border-gray-100">
-        <div className="w-9 h-9 rounded-full bg-[#B6D76D] flex items-center justify-center font-bold text-[12px] text-[#00403C]">
-          JW
+      {/* User Info + Logout */}
+      <div className="mt-auto border-t border-gray-100">
+        {/* User Info */}
+        <div className="p-[14px_18px] bg-gray-50 flex items-center gap-[10px]">
+          <div className="w-9 h-9 rounded-full bg-[#B6D76D] flex items-center justify-center font-bold text-[12px] text-[#00403C] shrink-0">
+            {initials}
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-[12px] font-bold text-[#525252] truncate">
+              {user.name || "Unknown"}
+            </p>
+            <p className="text-[10px] text-gray-400 truncate capitalize">
+              {user.role || "User"}
+            </p>
+          </div>
         </div>
-        <div className="min-w-0">
-          <p className="text-[12px] font-bold text-[#525252] truncate">
-            James William
-          </p>
-          <p className="text-[10px] text-gray-400 truncate">Store Manager</p>
+
+        {/* Logout Button */}
+        <div className="p-[10px_18px] pb-[14px]">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-[10px] px-[14px] py-[9px] rounded-lg text-[13px] text-red-500 hover:bg-red-50 transition-all duration-200 font-medium"
+          >
+            <i className="ti ti-logout text-[18px]"></i>
+            Logout
+          </button>
         </div>
       </div>
     </aside>
