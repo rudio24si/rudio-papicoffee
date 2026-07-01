@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const features = [
   {
@@ -119,10 +119,28 @@ const faqs = [
     question: "Apakah saya bisa mengatur promo sendiri?",
     answer: "Ya, kamu bisa membuat campaign promo dan loyalty langsung dari dashboard.",
   },
+  {
+    question: "Bagaimana cara menghubungi support jika ada kendala?",
+    answer: "Tim support siap membantu lewat email, chat, atau telepon pada jam kerja.",
+  },
 ];
 
 export default function Landing() {
   const [openFaq, setOpenFaq] = useState(null);
+  const [showStickyCta, setShowStickyCta] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const hero = document.getElementById("hero-section");
+      if (!hero) return;
+      setShowStickyCta(window.scrollY > hero.clientHeight - 120);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#F7F8F8] text-[#1A1A1A]">
@@ -145,6 +163,9 @@ export default function Landing() {
             <a href="#how-it-works" className="transition hover:text-[#0D3B33]">
               Cara Kerja
             </a>
+            <a href="#testimonials" className="transition hover:text-[#0D3B33]">
+              Testimoni
+            </a>
             <a href="#pricing" className="transition hover:text-[#0D3B33]">
               Harga
             </a>
@@ -163,7 +184,7 @@ export default function Landing() {
       </div>
 
       <main className="mx-auto max-w-[1200px] px-6 py-12 sm:px-8 lg:py-16">
-        <section className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <section id="hero-section" className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div>
             <span className="inline-flex rounded-full bg-[#B8EDE3]/30 px-4 py-2 text-sm font-semibold text-[#0D3B33]">
               Dipercaya oleh 100+ coffee shop
@@ -228,6 +249,22 @@ export default function Landing() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-[28px] bg-[#FFFFFF] p-6 shadow-[0_20px_50px_rgba(13,59,51,0.08)] sm:p-8">
+          <div className="flex flex-col gap-4 text-center lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Social Proof</p>
+              <h2 className="mt-3 text-2xl font-semibold text-[#0D3B33] sm:text-3xl">Digunakan oleh coffee shop di 10+ kota.</h2>
+            </div>
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+              {['KopiKita','BeanHouse','RoastLab','CafeRina'].map((brand) => (
+                <div key={brand} className="rounded-3xl bg-[#F7F8F8] px-4 py-3 text-center text-sm font-semibold text-[#0D3B33]">
+                  {brand}
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -375,6 +412,38 @@ export default function Landing() {
           </div>
         </section>
 
+        <section id="comparison" className="mt-20 rounded-[32px] bg-white p-8 shadow-[0_24px_60px_rgba(13,59,51,0.08)] sm:p-10">
+          <div className="text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Perbandingan</p>
+            <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Manual vs Papi Coffee CRM</h2>
+          </div>
+          <div className="mt-10 overflow-x-auto">
+            <table className="min-w-full border-separate border-spacing-y-4 text-left">
+              <thead>
+                <tr>
+                  <th className="px-4 py-3 text-sm font-semibold text-[#6B7280]">Aspek</th>
+                  <th className="px-4 py-3 text-sm font-semibold text-[#6B7280]">Cara Manual</th>
+                  <th className="px-4 py-3 text-sm font-semibold text-[#6B7280]">Papi Coffee CRM</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['Pencatatan omzet', 'Manual, rawan salah', 'Otomatis & real-time'],
+                  ['Data pelanggan', 'Tercecer', 'Terpusat & tersegmentasi'],
+                  ['Stok bahan baku', 'Dicek manual', 'Notifikasi restock otomatis'],
+                  ['Laporan', 'Rekap manual', 'Dashboard analitik instan'],
+                ].map(([label, manual, crm]) => (
+                  <tr key={label} className="rounded-[24px] bg-[#F7F8F8]">
+                    <td className="whitespace-nowrap px-4 py-4 font-semibold text-[#0D3B33]">{label}</td>
+                    <td className="px-4 py-4 text-sm text-[#6B7280]">{manual}</td>
+                    <td className="px-4 py-4 text-sm text-[#0D3B33]">{crm}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         <section id="pricing" className="mt-20">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Harga</p>
@@ -445,6 +514,23 @@ export default function Landing() {
           </div>
         </section>
       </main>
+
+      {showStickyCta && (
+        <div className="fixed inset-x-0 bottom-0 z-50 block md:hidden">
+          <div className="mx-auto flex max-w-[1200px] items-center justify-between bg-[#0D3B33] px-4 py-3 text-white shadow-[0_-10px_30px_rgba(13,59,51,0.18)]">
+            <div>
+              <p className="text-sm font-semibold">Coba Papi Coffee CRM</p>
+              <p className="text-xs text-[#B8EDE3]">Daftar trial gratis sekarang</p>
+            </div>
+            <Link
+              to="/login"
+              className="inline-flex items-center justify-center rounded-full bg-[#B8EDE3] px-4 py-2 text-sm font-semibold text-[#0D3B33] shadow-sm shadow-[#0D3B33]/20"
+            >
+              Coba Gratis
+            </Link>
+          </div>
+        </div>
+      )}
 
       <footer id="footer" className="border-t border-[#0D3B33]/10 bg-white py-10">
         <div className="mx-auto grid max-w-[1200px] gap-10 px-6 text-sm text-[#6B7280] sm:grid-cols-[1.5fr_1fr] sm:px-8 lg:grid-cols-[1.7fr_1fr_1fr] lg:items-start">
