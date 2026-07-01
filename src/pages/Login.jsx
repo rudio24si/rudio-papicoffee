@@ -52,7 +52,7 @@ export default function Login() {
         );
 
         setLoading(false);
-        navigate("/");
+        navigate("/app");
       } else {
         setError("Username atau Password salah!");
         setLoading(false);

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./tailwind.css";
 
 // Layouts
@@ -8,6 +8,7 @@ import AuthLayout from "./layouts/AuthLayout";
 import React, { Suspense } from "react";
 import Loading from "./components/Loading";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Landing from "./pages/Landing";
 
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Members = React.lazy(() => import("./pages/Members"));
@@ -31,7 +32,16 @@ export default function App() {
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
         <Routes>
-          <Route element={<MainLayout />}>
+          <Route index element={<Landing />} />
+
+          <Route
+            path="/app"
+            element={
+              <ProtectedRoute>
+                <MainLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Dashboard />} />
             <Route path="users" element={<UsersPage />} />
             <Route path="members" element={<Members />} />
@@ -50,6 +60,8 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

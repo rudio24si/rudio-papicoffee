@@ -23,19 +23,19 @@ const Sidebar = () => {
   };
 
   const menuItems = [
-    { icon: "ti-layout-dashboard", label: "Dashboard", path: "/" },
-    { icon: "ti-users-group", label: "Users", path: "/users" },
-    { icon: "ti-users-group", label: "Members", path: "/members" },
-    { icon: "ti-shopping-cart-copy", label: "Orders", path: "/orders" },
-    { icon: "ti-gift-card", label: "Loyalty", path: "/loyalty" },
-    { icon: "ti-chart-pie-2", label: "Segmentation", path: "/segmentation" },
-    { icon: "ti-speakerphone", label: "Campaigns", path: "/campaigns" },
-    { icon: "ti-history", label: "Queue", path: "/queue", badge: 3 },
-    { icon: "ti-message-report", label: "Feedback", path: "/feedback" },
+    { icon: "ti-layout-dashboard", label: "Dashboard", path: "/app" },
+    { icon: "ti-users-group", label: "Users", path: "/app/users" },
+    { icon: "ti-users-group", label: "Members", path: "/app/members" },
+    { icon: "ti-shopping-cart-copy", label: "Orders", path: "/app/orders" },
+    { icon: "ti-gift-card", label: "Loyalty", path: "/app/loyalty" },
+    { icon: "ti-chart-pie-2", label: "Segmentation", path: "/app/segmentation" },
+    { icon: "ti-speakerphone", label: "Campaigns", path: "/app/campaigns" },
+    { icon: "ti-history", label: "Queue", path: "/app/queue", badge: 3 },
+    { icon: "ti-message-report", label: "Feedback", path: "/app/feedback" },
     {
       icon: "ti-presentation-analytics",
       label: "Analytics",
-      path: "/analytics",
+      path: "/app/analytics",
     },
   ];
 
