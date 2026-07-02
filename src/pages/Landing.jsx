@@ -3,125 +3,129 @@ import { useState, useEffect } from "react";
 
 const features = [
   {
-    title: "Analitik Real-time",
-    description: "Lihat performa penjualan, margin, dan tren harian secara langsung di satu dashboard.",
-    icon: "📊",
+    title: "Menu variatif untuk semua selera",
+    description: "Temukan pilihan kopi susu, non coffee, black coffee, matcha, affogato, dan snack yang cocok untuk setiap momen.",
+    icon: "☕",
   },
   {
-    title: "Order & Transaksi",
-    description: "Atur order, pembayaran, dan antrian barista tanpa harus pindah aplikasi.",
-    icon: "🧾",
+    title: "Custom sesuai selera",
+    description: "Atur tingkat gula jadi No Sugar, Less Sugar, Normal, atau Extra Sugar, lalu tambahkan topping favorit Anda.",
+    icon: "✨",
   },
   {
-    title: "Member & Loyalty",
-    description: "Bangun program loyalitas yang mudah digunakan untuk pelanggan setia.",
+    title: "Poin & reward member",
+    description: "Setiap Rp10.000 belanja sama dengan 1 poin, dan 50 poin bisa ditukar menjadi 1 minuman gratis.",
     icon: "💳",
   },
   {
-    title: "Antrian Pintar",
-    description: "Kelola queue dan prioritas pesanan agar layanan tetap cepat dan rapi.",
-    icon: "⏱️",
+    title: "Tier Silver, Gold, Platinum",
+    description: "Semakin sering datang, semakin besar benefit yang bisa Anda nikmati sebagai member.",
+    icon: "🏅",
   },
   {
-    title: "Segmentasi Pelanggan",
-    description: "Kelompokkan pelanggan dan kirim promo yang tepat ke target yang benar.",
-    icon: "👥",
+    title: "Promo menarik setiap minggu",
+    description: "Nikmati Senin Hemat, Weekend Bundle, dan promo musiman seperti Ramadan Special.",
+    icon: "🎉",
   },
   {
-    title: "Campaign & Promosi",
-    description: "Rancang promo khusus dan pantau efektivitasnya dalam sekali lihat.",
-    icon: "🎯",
+    title: "Bebas pilih cara menikmati",
+    description: "Pilih dine-in, take away, atau delivery agar minuman favorit Anda tetap sampai dengan nyaman.",
+    icon: "📱",
   },
 ];
 
 const steps = [
   {
-    title: "Daftar & Setup Toko",
-    description: "Mulai dengan akun baru, lalu tambahkan outlet dan menu kopi kamu.",
+    title: "Pilih menu & sesuaikan pesanan",
+    description: "Pilih favorit Anda, lalu atur tingkat gula dan topping sesuai selera.",
   },
   {
-    title: "Hubungkan Kasir/Order",
-    description: "Sinkronkan transaksi dan antrian agar data selalu update.",
+    title: "Pesan sesuai kenyamanan Anda",
+    description: "Nikmati pengalaman dine-in, take away, atau order delivery lewat mitra ojek online.",
   },
   {
-    title: "Pantau Dashboard",
-    description: "Lihat performa harian, member aktif, dan stok dalam satu tampilan.",
+    title: "Bayar dengan metode yang praktis",
+    description: "Pilih QRIS, e-wallet, cash, atau debit untuk transaksi yang lebih fleksibel.",
   },
   {
-    title: "Analisis & Kembangkan",
-    description: "Gunakan insight penjualan untuk memperbaiki menu dan promosi.",
+    title: "Kumpulkan poin & tukar reward",
+    description: "Setiap transaksi member akan menambah poin dan membuka kesempatan reward yang lebih menarik.",
   },
 ];
 
 const testimonials = [
   {
-    quote: "Dengan Papi Coffee, antrian jadi lebih cepat dan laporan penjualan langsung rapi.",
-    name: "Rina Santoso",
-    role: "Pemilik Kedai Kopi Bean & Brew",
+    quote: "Rasanya konsisten, tempatnya nyaman, dan cocok buat nongkrong santai atau kerja sebentar.",
+    name: "Ayu",
+    role: "Pelanggan Setia",
     rating: 5,
   },
   {
-    quote: "Sistem loyalty membuat pelanggan kembali lebih sering, tanpa perlu ribet.",
-    name: "Budi Prasetya",
-    role: "Manajer Operasional Kopi Kota",
+    quote: "Saya suka bisa pilih tingkat gula dan topping, jadi minuman favorit selalu pas di lidah.",
+    name: "Rizki",
+    role: "Pelanggan Regular",
     rating: 5,
   },
   {
-    quote: "Semua data stok dan transaksi bisa dipantau dari satu layar, sangat membantu.",
-    name: "Mia Amanda",
-    role: "Owner Coffee Barista",
-    rating: 4,
+    quote: "Program member-nya jelas dan reward-nya bikin saya makin sering balik lagi.",
+    name: "Nadia",
+    role: "Member Gold",
+    rating: 5,
   },
 ];
 
 const pricing = [
   {
-    name: "Starter",
-    price: "Rp 149.000",
-    description: "Untuk kedai kopi kecil yang ingin mulai digital.",
-    features: ["Dashboard penjualan", "Manajemen order", "Program loyalty dasar"],
+    name: "Silver",
+    price: "Mulai dari member aktif",
+    description: "Tingkat awal member yang membuat setiap transaksi semakin bernilai lewat poin loyalti.",
+    features: ["Kumpulkan poin tiap belanja", "Akses promo rutin", "Reward sederhana untuk member"],
     featured: false,
   },
   {
-    name: "Pro",
-    price: "Rp 249.000",
-    description: "Paket populer untuk pemilik coffee shop aktif.",
-    features: ["Semua fitur Starter", "Antrian pintar", "Segmentasi pelanggan"],
+    name: "Gold",
+    price: "Berdasarkan aktivitas belanja",
+    description: "Tingkat yang cocok bagi pelanggan yang sering datang dan ingin benefit yang lebih menarik.",
+    features: ["Promo lebih awal", "Reward yang lebih besar", "Benefit loyalti yang makin terasa"],
     featured: true,
   },
   {
-    name: "Business",
-    price: "Rp 399.000",
-    description: "Untuk multi-cabang dengan kebutuhan promosi lanjutan.",
-    features: ["Semua fitur Pro", "Campaign & promosi", "Support prioritas"],
+    name: "Platinum",
+    price: "Tier tertinggi",
+    description: "Nikmati pengalaman member yang lebih eksklusif dengan reward dan promo yang lebih unggul.",
+    features: ["Benefit loyalti yang lebih besar", "Promo eksklusif", "Prioritas reward khusus member"],
     featured: false,
   },
 ];
 
 const faqs = [
   {
-    question: "Apakah ada trial gratis?",
-    answer: "Ya, kamu bisa mencoba Papi Coffee CRM secara gratis sebelum memutuskan paket yang tepat.",
+    question: "Bagaimana cara jadi member Papi Coffee?",
+    answer: "Anda bisa mendaftar sebagai member saat berkunjung atau mengikuti informasi yang kami bagikan melalui Instagram dan WhatsApp.",
   },
   {
-    question: "Bisakah digunakan untuk multi-cabang?",
-    answer: "Tentu, paket Business mendukung manajemen beberapa outlet sekaligus.",
+    question: "Bagaimana cara kerja poin & reward?",
+    answer: "Setiap Rp10.000 belanja akan dikonversi menjadi 1 poin, dan 50 poin bisa ditukar menjadi 1 minuman gratis.",
   },
   {
-    question: "Apakah sistem ini bisa terhubung ke kasir saya?",
-    answer: "Papi Coffee CRM dirancang untuk mudah sinkron dengan proses order dan kasir digital.",
+    question: "Apa bedanya tier Silver, Gold, dan Platinum?",
+    answer: "Ketiga tier ini mewakili level benefit member yang berbeda, semakin sering berbelanja maka benefit yang didapat akan semakin besar.",
   },
   {
-    question: "Bagaimana keamanan data pelanggan?",
-    answer: "Data disimpan dengan standar keamanan yang aman dan hanya diakses oleh tim Anda.",
+    question: "Apakah bisa custom tingkat gula atau tambah topping?",
+    answer: "Tentu. Anda bisa memilih level gula sesuai selera dan menambahkan topping favorit pada pesanan Anda.",
   },
   {
-    question: "Apakah saya bisa mengatur promo sendiri?",
-    answer: "Ya, kamu bisa membuat campaign promo dan loyalty langsung dari dashboard.",
+    question: "Apakah Papi Coffee melayani delivery?",
+    answer: "Ya, Papi Coffee melayani delivery melalui kerja sama dengan ojek online agar pesanan Anda tetap mudah didapat.",
   },
   {
-    question: "Bagaimana cara menghubungi support jika ada kendala?",
-    answer: "Tim support siap membantu lewat email, chat, atau telepon pada jam kerja.",
+    question: "Metode pembayaran apa saja yang tersedia?",
+    answer: "Kami menerima pembayaran melalui QRIS, e-wallet, cash, dan debit.",
+  },
+  {
+    question: "Apakah ada promo mingguan atau musiman?",
+    answer: "Tentu. Papi Coffee rutin menghadirkan promo seperti Senin Hemat, Weekend Bundle, dan Ramadan Special.",
   },
 ];
 
@@ -152,7 +156,7 @@ export default function Landing() {
             </div>
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.24em]">Papi Coffee</p>
-              <p className="text-xs text-[#6B7280]">CRM untuk Coffee Shop</p>
+              <p className="text-xs text-[#6B7280]">Tempat ngopi yang nyaman</p>
             </div>
           </Link>
 
@@ -166,8 +170,8 @@ export default function Landing() {
             <a href="#testimonials" className="transition hover:text-[#0D3B33]">
               Testimoni
             </a>
-            <a href="#pricing" className="transition hover:text-[#0D3B33]">
-              Harga
+            <a href="#membership" className="transition hover:text-[#0D3B33]">
+              Membership
             </a>
             <a href="#faq" className="transition hover:text-[#0D3B33]">
               FAQ
@@ -175,10 +179,10 @@ export default function Landing() {
           </nav>
 
           <Link
-            to="/login"
+            to="/#menu"
             className="inline-flex items-center justify-center rounded-full bg-[#0D3B33] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-[#0D3B33]/20 transition hover:bg-[#0A2E28]"
           >
-            Coba Gratis
+            Pesan Sekarang
           </Link>
         </div>
       </div>
@@ -187,28 +191,28 @@ export default function Landing() {
         <section id="hero-section" className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div>
             <span className="inline-flex rounded-full bg-[#B8EDE3]/30 px-4 py-2 text-sm font-semibold text-[#0D3B33]">
-              Dipercaya oleh 100+ coffee shop
+              Kopi berkualitas, suasana nyaman, harga terjangkau
             </span>
             <h1 className="mt-6 text-4xl font-bold tracking-tight text-[#0D3B33] sm:text-5xl lg:text-6xl">
-              Kelola kedai kopi kamu lebih cerdas dengan Papi Coffee CRM
+              Datanglah untuk menikmati kopi favorit, snack hangat, dan suasana yang bikin betah di Papi Coffee
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-[#6B7280] sm:text-lg">
-              Dashboard all-in-one untuk order, member, loyalty, stok, dan analitik penjualan. Buat operasional lebih efisien tanpa perlu laporan manual.
+              Dari kopi susu dan black coffee hingga matcha, affogato, dan menu non-coffee, setiap kunjungan kami hadirkan dengan rasa yang nyaman, ramah, dan penuh pilihan.
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Link
-                to="/login"
+                to="/#menu"
                 className="inline-flex items-center justify-center rounded-full bg-[#0D3B33] px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-[#0D3B33]/20 transition hover:bg-[#0A2E28]"
               >
-                Mulai Gratis
+                Lihat Menu
               </Link>
-              <a
-                href="#showcase"
+              <Link
+                to="/#membership"
                 className="inline-flex items-center justify-center rounded-full border border-[#0D3B33]/20 bg-white px-7 py-3 text-sm font-semibold text-[#0D3B33] transition hover:border-[#0D3B33]"
               >
-                Lihat Demo
-              </a>
+                Gabung Jadi Member
+              </Link>
             </div>
           </div>
 
@@ -216,36 +220,36 @@ export default function Landing() {
             <div className="rounded-[32px] border border-[#0D3B33]/10 bg-white p-6 shadow-[0_30px_80px_rgba(13,59,51,0.08)] sm:p-8">
               <div className="mb-6 flex flex-wrap items-center gap-3">
                 <div className="rounded-2xl bg-[#B8EDE3]/30 px-4 py-2 text-sm font-semibold text-[#0D3B33]">
-                  Live dashboard
+                  Promo Aktif Hari Ini
                 </div>
-                <div className="text-sm text-[#6B7280]">Ringkasan kinerja harian</div>
+                <div className="text-sm text-[#6B7280]">Senin Hemat, Weekend Bundle, dan reward member</div>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="rounded-3xl bg-[#0D3B33] p-5 text-white shadow-lg shadow-[#0D3B33]/10">
-                  <p className="text-xs uppercase text-[#B8EDE3]/80">Penjualan Hari Ini</p>
-                  <p className="mt-4 text-3xl font-semibold">Rp 18.450.000</p>
+                  <p className="text-xs uppercase text-[#B8EDE3]/80">Menu Favorit</p>
+                  <p className="mt-4 text-3xl font-semibold">Kopi Susu & Matcha</p>
                 </div>
                 <div className="rounded-3xl bg-[#F7F8F8] p-5">
-                  <p className="text-xs uppercase text-[#0D3B33]/60">Member Aktif</p>
-                  <p className="mt-4 text-3xl font-semibold text-[#0D3B33]">540</p>
+                  <p className="text-xs uppercase text-[#0D3B33]/60">Member Benefit</p>
+                  <p className="mt-4 text-3xl font-semibold text-[#0D3B33]">Poin & Reward</p>
                 </div>
               </div>
               <div className="mt-6 space-y-4">
                 <div className="rounded-[24px] bg-[#F1FFFB] p-4">
                   <div className="flex items-center justify-between text-sm text-[#0D3B33]">
-                    <span>Tren Penjualan</span>
-                    <span className="rounded-full bg-[#C6E85C]/20 px-3 py-1 text-xs font-semibold text-[#0D3B33]">+18%</span>
+                    <span>Promo Mingguan</span>
+                    <span className="rounded-full bg-[#C6E85C]/20 px-3 py-1 text-xs font-semibold text-[#0D3B33]">Senin & Weekend</span>
                   </div>
                   <div className="mt-4 h-24 rounded-3xl bg-gradient-to-r from-[#B8EDE3] to-[#0D3B33]" />
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="rounded-[24px] bg-white p-4 shadow-sm shadow-[#0D3B33]/5">
-                    <p className="text-xs uppercase tracking-[0.18em] text-[#6B7280]">Transaksi Terakhir</p>
-                    <p className="mt-3 font-semibold text-[#0D3B33]">12 order baru</p>
+                    <p className="text-xs uppercase tracking-[0.18em] text-[#6B7280]">Custom Pesanan</p>
+                    <p className="mt-3 font-semibold text-[#0D3B33]">Gula & topping sesuai selera</p>
                   </div>
                   <div className="rounded-[24px] bg-white p-4 shadow-sm shadow-[#0D3B33]/5">
-                    <p className="text-xs uppercase tracking-[0.18em] text-[#6B7280]">Menu Terlaris</p>
-                    <p className="mt-3 font-semibold text-[#0D3B33]">Caramel Latte</p>
+                    <p className="text-xs uppercase tracking-[0.18em] text-[#6B7280]">Cara Nikmati</p>
+                    <p className="mt-3 font-semibold text-[#0D3B33]">Dine-in, take away, delivery</p>
                   </div>
                 </div>
               </div>
@@ -257,12 +261,12 @@ export default function Landing() {
           <div className="flex flex-col gap-4 text-center lg:flex-row lg:items-center lg:justify-between">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Social Proof</p>
-              <h2 className="mt-3 text-2xl font-semibold text-[#0D3B33] sm:text-3xl">Digunakan oleh coffee shop di 10+ kota.</h2>
+              <h2 className="mt-3 text-2xl font-semibold text-[#0D3B33] sm:text-3xl">Banyak pelanggan yang kembali karena rasa, suasana, dan reward-nya terasa nyata.</h2>
             </div>
             <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-              {['KopiKita','BeanHouse','RoastLab','CafeRina'].map((brand) => (
-                <div key={brand} className="rounded-3xl bg-[#F7F8F8] px-4 py-3 text-center text-sm font-semibold text-[#0D3B33]">
-                  {brand}
+              {['Rating pelanggan di Instagram & Google','Feedback positif dari pengunjung setia','Member loyalti yang aktif kembali','Update promo lewat Instagram & WhatsApp'].map((item) => (
+                <div key={item} className="rounded-3xl bg-[#F7F8F8] px-4 py-3 text-center text-sm font-semibold text-[#0D3B33]">
+                  {item}
                 </div>
               ))}
             </div>
@@ -272,32 +276,30 @@ export default function Landing() {
         <section id="problem-solution" className="mt-20">
           <div className="grid gap-8 lg:grid-cols-2">
             <div className="rounded-[28px] border border-[#0D3B33]/10 bg-white p-8 shadow-sm shadow-[#0D3B33]/5">
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0D3B33]/60">Tantangan tanpa CRM</p>
-              <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33]">Pencatatan manual bikin operasi lambat.</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0D3B33]/60">Kenapa pilih Papi Coffee</p>
+              <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33]">Rasa yang nyaman, tempat yang hangat, dan harga yang tetap ramah di kantong.</h2>
               <ul className="mt-6 space-y-4 text-sm leading-7 text-[#6B7280]">
-                <li>• Data order tercecer di catatan dan Excel.</li>
-                <li>• Stok tidak terpantau, sering kehabisan bahan mendadak.</li>
-                <li>• Member dan loyalty sulit diatur tanpa sistem.
-                </li>
+                <li>• Racikan kopi dan non-coffee yang siap menemani momen santai atau kerja.</li>
+                <li>• Suasana bersih, nyaman, dan cocok untuk duduk lama maupun sekadar singgah sebentar.</li>
+                <li>• Pelayanan yang cepat, ramah, dan tetap menjaga kualitas setiap pesanan.</li>
               </ul>
             </div>
             <div className="rounded-[28px] border border-[#B8EDE3]/50 bg-[#F1FFFB] p-8 shadow-sm shadow-[#0D3B33]/5">
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0D3B33]/60">Dengan Papi Coffee CRM</p>
-              <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33]">All-in-one untuk operasi kedai kopi lebih lancar.</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0D3B33]/60">Yang membuat orang balik lagi</p>
+              <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33]">Banyak yang datang bukan hanya untuk minum, tapi juga untuk merasakan pengalaman yang konsisten.</h2>
               <ul className="mt-6 space-y-4 text-sm leading-7 text-[#0D3B33]/80">
-                <li>• Order, loyalty, dan stok terintegrasi dalam satu dashboard.</li>
-                <li>• Insight penjualan real-time untuk keputusan cepat.</li>
-                <li>• Manajemen antrian dan promo jadi lebih mudah.
-                </li>
+                <li>• Menu yang lengkap mulai dari kopi susu, black coffee, matcha, affogato, hingga snack.</li>
+                <li>• Program member yang memberi poin, reward, dan promo menarik setiap bulannya.</li>
+                <li>• Pilihan pesan yang fleksibel lewat dine-in, take away, atau delivery.</li>
               </ul>
             </div>
           </div>
         </section>
 
-        <section id="features" className="mt-20">
+        <section id="menu" className="mt-20">
           <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Fitur Utama</p>
-            <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Semua kebutuhan coffee shop dalam satu platform.</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Kenapa Betah di Papi Coffee</p>
+            <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Hal yang membuat setiap kunjungan terasa istimewa.</h2>
           </div>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {features.map((feature) => (
@@ -334,9 +336,9 @@ export default function Landing() {
           <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Showcase</p>
-              <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Intip dashboard yang membuat operasional lebih cepat.</h2>
+              <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Lihat menu favorit, promo aktif, dan benefit member yang membuat kembali lagi.</h2>
               <p className="mt-5 text-base leading-8 text-[#6B7280]">
-                Preview visual dari ringkasan toko, tren penjualan, transaksi, dan menu terlaris dengan gaya yang profesional dan mudah dibaca.
+                Papi Coffee hadir untuk menemani momen santai, kerja, dan kumpul dengan pilihan menu yang variatif serta reward yang semakin terasa saat Anda jadi member.
               </p>
             </div>
             <div className="relative">
@@ -352,32 +354,32 @@ export default function Landing() {
                 <div className="space-y-6 p-6">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="rounded-[24px] bg-[#0D3B33] p-5 text-white">
-                      <p className="text-xs uppercase tracking-[0.24em] text-[#B8EDE3]/80">Ringkasan Penjualan</p>
-                      <p className="mt-4 text-3xl font-semibold">Rp 18.450.000</p>
+                      <p className="text-xs uppercase tracking-[0.24em] text-[#B8EDE3]/80">Menu Unggulan</p>
+                      <p className="mt-4 text-3xl font-semibold">Kopi Susu & Affogato</p>
                     </div>
                     <div className="rounded-[24px] bg-[#F7F8F8] p-5">
-                      <p className="text-xs uppercase tracking-[0.24em] text-[#6B7280]">Laba Bersih</p>
-                      <p className="mt-4 text-3xl font-semibold text-[#0D3B33]">Rp 4.820.000</p>
+                      <p className="text-xs uppercase tracking-[0.24em] text-[#6B7280]">Promo Aktif</p>
+                      <p className="mt-4 text-3xl font-semibold text-[#0D3B33]">Senin Hemat</p>
                     </div>
                   </div>
                   <div className="rounded-[24px] bg-[#F7F8F8] p-5">
-                    <p className="text-xs uppercase tracking-[0.24em] text-[#6B7280]">Tren Penjualan per Jam</p>
-                    <div className="mt-4 flex h-32 items-end gap-2">
-                      <span className="h-12 w-full rounded-t-full bg-[#B8EDE3]" />
-                      <span className="h-20 w-full rounded-t-full bg-[#0D3B33]" />
-                      <span className="h-16 w-full rounded-t-full bg-[#B8EDE3]" />
-                      <span className="h-24 w-full rounded-t-full bg-[#0D3B33]" />
-                      <span className="h-10 w-full rounded-t-full bg-[#B8EDE3]" />
+                    <p className="text-xs uppercase tracking-[0.24em] text-[#6B7280]">Member Experience</p>
+                    <div className="mt-4 rounded-[24px] border border-[#0D3B33]/10 bg-white p-4 shadow-sm shadow-[#0D3B33]/5">
+                      <div className="flex items-center justify-between text-sm text-[#0D3B33]">
+                        <span className="font-semibold">Silver Member</span>
+                        <span className="rounded-full bg-[#B8EDE3]/30 px-3 py-1 text-xs font-semibold text-[#0D3B33]">Poin siap ditukar</span>
+                      </div>
+                      <p className="mt-3 text-sm leading-7 text-[#6B7280]">Setiap transaksi menambah poin, dan reward bisa langsung dinikmati saat cukup.</p>
                     </div>
                   </div>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="rounded-[24px] bg-white p-4 shadow-sm shadow-[#0D3B33]/5">
-                      <p className="text-xs uppercase tracking-[0.18em] text-[#6B7280]">Transaksi Terakhir</p>
-                      <p className="mt-3 font-semibold text-[#0D3B33]">12 order baru</p>
+                      <p className="text-xs uppercase tracking-[0.18em] text-[#6B7280]">Cara Pesan</p>
+                      <p className="mt-3 font-semibold text-[#0D3B33]">Dine-in, take away, delivery</p>
                     </div>
                     <div className="rounded-[24px] bg-white p-4 shadow-sm shadow-[#0D3B33]/5">
-                      <p className="text-xs uppercase tracking-[0.18em] text-[#6B7280]">Menu Terlaris</p>
-                      <p className="mt-3 font-semibold text-[#0D3B33]">Caramel Latte</p>
+                      <p className="text-xs uppercase tracking-[0.18em] text-[#6B7280]">Pilihan Pembayaran</p>
+                      <p className="mt-3 font-semibold text-[#0D3B33]">QRIS, e-wallet, cash, debit</p>
                     </div>
                   </div>
                 </div>
@@ -389,7 +391,7 @@ export default function Landing() {
         <section id="testimonials" className="mt-20">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Testimoni</p>
-            <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Apa kata pemilik kedai kopi?</h2>
+            <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Apa kata pelanggan Papi Coffee?</h2>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {testimonials.map((item) => (
@@ -412,42 +414,10 @@ export default function Landing() {
           </div>
         </section>
 
-        <section id="comparison" className="mt-20 rounded-[32px] bg-white p-8 shadow-[0_24px_60px_rgba(13,59,51,0.08)] sm:p-10">
+        <section id="membership" className="mt-20 rounded-[32px] bg-white p-8 shadow-[0_24px_60px_rgba(13,59,51,0.08)] sm:p-10">
           <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Perbandingan</p>
-            <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Manual vs Papi Coffee CRM</h2>
-          </div>
-          <div className="mt-10 overflow-x-auto">
-            <table className="min-w-full border-separate border-spacing-y-4 text-left">
-              <thead>
-                <tr>
-                  <th className="px-4 py-3 text-sm font-semibold text-[#6B7280]">Aspek</th>
-                  <th className="px-4 py-3 text-sm font-semibold text-[#6B7280]">Cara Manual</th>
-                  <th className="px-4 py-3 text-sm font-semibold text-[#6B7280]">Papi Coffee CRM</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ['Pencatatan omzet', 'Manual, rawan salah', 'Otomatis & real-time'],
-                  ['Data pelanggan', 'Tercecer', 'Terpusat & tersegmentasi'],
-                  ['Stok bahan baku', 'Dicek manual', 'Notifikasi restock otomatis'],
-                  ['Laporan', 'Rekap manual', 'Dashboard analitik instan'],
-                ].map(([label, manual, crm]) => (
-                  <tr key={label} className="rounded-[24px] bg-[#F7F8F8]">
-                    <td className="whitespace-nowrap px-4 py-4 font-semibold text-[#0D3B33]">{label}</td>
-                    <td className="px-4 py-4 text-sm text-[#6B7280]">{manual}</td>
-                    <td className="px-4 py-4 text-sm text-[#0D3B33]">{crm}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section id="pricing" className="mt-20">
-          <div className="text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Harga</p>
-            <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Pilih paket yang cocok untuk kedai kopi kamu.</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Membership</p>
+            <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Jadi member dan nikmati reward yang makin terasa saat Anda sering datang.</h2>
           </div>
           <div className="mt-10 grid gap-5 xl:grid-cols-3">
             {pricing.map((plan) => (
@@ -462,10 +432,10 @@ export default function Landing() {
                   ))}
                 </ul>
                 <Link
-                  to="/login"
+                  to="/#menu"
                   className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition ${plan.featured ? "bg-white text-[#0D3B33] hover:bg-[#f3f3f3]" : "bg-[#0D3B33] text-white hover:bg-[#0A2E28]"}`}
                 >
-                  Pilih Paket
+                  Gabung Member
                 </Link>
               </div>
             ))}
@@ -475,7 +445,7 @@ export default function Landing() {
         <section id="faq" className="mt-20 rounded-[32px] bg-white p-8 shadow-[0_24px_60px_rgba(13,59,51,0.08)] sm:p-10">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">FAQ</p>
-            <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Pertanyaan umum seputar Papi Coffee CRM.</h2>
+            <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Pertanyaan umum seputar Papi Coffee.</h2>
           </div>
           <div className="mt-10 space-y-4">
             {faqs.map((item, index) => {
@@ -502,14 +472,14 @@ export default function Landing() {
         <section className="mt-20 rounded-[32px] bg-[#0D3B33] px-8 py-14 text-white shadow-[0_30px_80px_rgba(13,59,51,0.18)] sm:px-12">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#B8EDE3]/80">Siap mengubah kedai kopi kamu?</p>
-              <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">Mulai sekarang dan bawa manajemen kedai ke level berikutnya.</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#B8EDE3]/80">Ingin pengalaman ngopi yang lebih nyaman?</p>
+              <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">Datang dan rasakan suasana hangat, menu favorit, serta reward member yang makin menarik di Papi Coffee.</h2>
             </div>
             <Link
-              to="/login"
+              to="/#menu"
               className="inline-flex min-w-[180px] items-center justify-center rounded-full bg-[#B8EDE3] px-6 py-4 text-sm font-semibold text-[#0D3B33] shadow-md shadow-[#0D3B33]/20 transition hover:bg-[#a7e4d3]"
             >
-              Coba Gratis Sekarang
+              Pesan Sekarang
             </Link>
           </div>
         </section>
@@ -519,14 +489,14 @@ export default function Landing() {
         <div className="fixed inset-x-0 bottom-0 z-50 block md:hidden">
           <div className="mx-auto flex max-w-[1200px] items-center justify-between bg-[#0D3B33] px-4 py-3 text-white shadow-[0_-10px_30px_rgba(13,59,51,0.18)]">
             <div>
-              <p className="text-sm font-semibold">Coba Papi Coffee CRM</p>
-              <p className="text-xs text-[#B8EDE3]">Daftar trial gratis sekarang</p>
+              <p className="text-sm font-semibold">Papi Coffee</p>
+              <p className="text-xs text-[#B8EDE3]">Pesan sekarang dan nikmati suasana terbaik</p>
             </div>
             <Link
-              to="/login"
+              to="/#menu"
               className="inline-flex items-center justify-center rounded-full bg-[#B8EDE3] px-4 py-2 text-sm font-semibold text-[#0D3B33] shadow-sm shadow-[#0D3B33]/20"
             >
-              Coba Gratis
+              Pesan Sekarang
             </Link>
           </div>
         </div>
@@ -539,11 +509,11 @@ export default function Landing() {
               <div className="grid h-12 w-12 place-items-center rounded-3xl bg-[#0D3B33] text-white text-2xl">☕</div>
               <div>
                 <p className="text-lg font-semibold">Papi Coffee</p>
-                <p className="text-sm text-[#6B7280]">CRM pemasaran untuk coffee shop modern.</p>
+                <p className="text-sm text-[#6B7280]">Nikmati kopi favorit, snack hangat, dan reward member yang makin terasa.</p>
               </div>
             </div>
             <p className="max-w-sm leading-7">
-              Bangun operasi kedai kopi lebih terstruktur dengan pelanggan yang lebih puas, order lebih cepat, dan laporan yang mudah dimengerti.
+              Nikmati kopi, non-coffee, snack, dan reward member di Papi Coffee dengan suasana yang nyaman untuk santai, kerja, atau kumpul.
             </p>
           </div>
           <div>
@@ -551,21 +521,21 @@ export default function Landing() {
             <ul className="space-y-3">
               <li><a href="#features" className="transition hover:text-[#0D3B33]">Fitur</a></li>
               <li><a href="#how-it-works" className="transition hover:text-[#0D3B33]">Cara Kerja</a></li>
-              <li><a href="#pricing" className="transition hover:text-[#0D3B33]">Harga</a></li>
+              <li><a href="#membership" className="transition hover:text-[#0D3B33]">Membership</a></li>
               <li><a href="#faq" className="transition hover:text-[#0D3B33]">FAQ</a></li>
             </ul>
           </div>
           <div>
             <p className="mb-4 font-semibold uppercase tracking-[0.24em] text-[#0D3B33]/70">Kontak</p>
             <ul className="space-y-3 text-[#6B7280]">
-              <li>Email: hello@papicoffee.id</li>
-              <li>Instagram: @papicoffeecrm</li>
-              <li>Telp: +62 812 3456 7890</li>
+              <li>Instagram: @papicoffee</li>
+              <li>WhatsApp: hubungi kami melalui akun resmi</li>
+              <li>Feedback dan pertanyaan pelanggan selalu kami sambut</li>
             </ul>
           </div>
         </div>
         <div className="mt-10 border-t border-[#0D3B33]/10 pt-6 text-center text-xs text-[#6B7280]">
-          © 2026 Papi Coffee CRM. All rights reserved.
+          © 2026 Papi Coffee. All rights reserved.
         </div>
       </footer>
     </div>
