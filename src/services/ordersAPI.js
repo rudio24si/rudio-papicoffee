@@ -20,7 +20,7 @@ export const ordersAPI = {
     return data;
   },
 
-  // Buat order SEKALIGUS otomatis tambah ke antrian queue
+  // Buat order SEKALIGUS otomatis tambah ke antrian queue + update poin member
   create: async (payload) => {
     const { data: newOrder, error: orderError } = await supabase
       .from("orders")
@@ -29,6 +29,7 @@ export const ordersAPI = {
       .single();
     if (orderError) throw orderError;
 
+    // Otomatis insert ke tabel queue
     const { error: queueError } = await supabase.from("queue").insert({
       order_id: newOrder.id,
       order_number: newOrder.order_number,
@@ -39,6 +40,15 @@ export const ordersAPI = {
       pickup_code: null,
     });
     if (queueError) throw queueError;
+
+    // Update poin & kunjungan member jika order dari member (ada member_id & points_earned)
+    if (newOrder.member_id && newOrder.points_earned > 0) {
+      await supabase.rpc("add_member_points", {
+        member_id: newOrder.member_id,
+        points_to_add: newOrder.points_earned,
+      });
+      // Tidak throw kalau gagal — order tetap tersimpan, poin bisa dikoreksi manual
+    }
 
     return newOrder;
   },
