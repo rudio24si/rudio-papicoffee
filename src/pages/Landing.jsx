@@ -1,5 +1,70 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { MENU_CATEGORIES } from "../data/menu";
+
+// ─── Menu Section Component ───────────────────────────────────────────────────
+const CATEGORY_EMOJI = {
+  "Kopi Susu":       "🧊",
+  "Black Coffee":    "☕",
+  "Non Coffee":      "🧃",
+  "Matcha Series":   "🍵",
+  "Affogato Series": "🍨",
+  "Snack":           "🍟",
+  "Extra Topping":   "✨",
+};
+
+function MenuSection() {
+  const [activeTab, setActiveTab] = useState(MENU_CATEGORIES[0].category);
+  const activeItems = MENU_CATEGORIES.find((c) => c.category === activeTab)?.items || [];
+
+  return (
+    <div className="mt-8">
+      {/* Tabs */}
+      <div className="flex flex-wrap justify-center gap-2 mb-8">
+        {MENU_CATEGORIES.map((cat) => (
+          <button
+            key={cat.category}
+            onClick={() => setActiveTab(cat.category)}
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+              activeTab === cat.category
+                ? "bg-[#0D3B33] text-white shadow-md shadow-[#0D3B33]/20"
+                : "bg-white border border-[#0D3B33]/15 text-[#0D3B33]/70 hover:border-[#0D3B33]/40"
+            }`}
+          >
+            <span>{CATEGORY_EMOJI[cat.category]}</span>
+            {cat.category}
+          </button>
+        ))}
+      </div>
+
+      {/* Grid items */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {activeItems.map((item) => (
+          <div
+            key={item.name}
+            className="group rounded-[20px] border border-[#0D3B33]/10 bg-white p-4 shadow-sm hover:-translate-y-1 hover:shadow-md hover:border-[#0D3B33]/30 transition-all duration-200"
+          >
+            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-[#B8EDE3]/30 text-xl group-hover:bg-[#0D3B33] group-hover:text-white transition-colors">
+              {CATEGORY_EMOJI[activeTab]}
+            </div>
+            <p className="text-sm font-semibold text-[#0D3B33] leading-snug">{item.name}</p>
+            <p className="mt-2 text-base font-bold text-[#0D3B33]">
+              Rp {item.price.toLocaleString("id-ID")}
+            </p>
+            <p className="text-[11px] text-[#6B7280] mt-0.5">Harga Reguler</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Extra Topping note */}
+      {activeTab !== "Extra Topping" && (
+        <p className="mt-6 text-center text-xs text-[#6B7280]">
+          ✨ Tambahkan topping: Extrashoot Espresso (7k) · Vanilla Ice Cream (5k) · Jelly Coklat (2k) · Oat Milk (7k)
+        </p>
+      )}
+    </div>
+  );
+}
 
 const features = [
   {
@@ -161,6 +226,9 @@ export default function Landing() {
           </Link>
 
           <nav className="hidden items-center gap-8 text-sm font-medium text-[#1A1A1A]/80 lg:flex">
+            <a href="#menu" className="transition hover:text-[#0D3B33]">
+              Menu
+            </a>
             <a href="#features" className="transition hover:text-[#0D3B33]">
               Fitur
             </a>
@@ -297,6 +365,17 @@ export default function Landing() {
         </section>
 
         <section id="menu" className="mt-20">
+          <div className="text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Menu Kami</p>
+            <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Pilihan lengkap untuk setiap selera.</h2>
+            <p className="mt-4 text-sm text-[#6B7280]">Semua menu tersedia dalam ukuran Reguler & Large. Tersedia juga pilihan Botol 250mL untuk beberapa varian.</p>
+          </div>
+
+          {/* Category Tabs */}
+          <MenuSection />
+        </section>
+
+        <section id="features" className="mt-20">
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.32em] text-[#0D3B33]/60">Kenapa Betah di Papi Coffee</p>
             <h2 className="mt-4 text-3xl font-semibold text-[#0D3B33] sm:text-4xl">Hal yang membuat setiap kunjungan terasa istimewa.</h2>
