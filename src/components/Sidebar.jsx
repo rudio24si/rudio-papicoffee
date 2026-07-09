@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabase";
 
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [queueCount, setQueueCount] = useState(0);
+
+  // Fetch jumlah antrian aktif (In Progress + Ready)
+  const fetchQueueCount = async () => {
+    try {
+      const { count, error } = await supabase
+        .from("queue")
+        .select("*", { count: "exact", head: true })
+        .neq("status", "Completed");
+      if (!error) setQueueCount(count || 0);
+    } catch {
+      // silently fail
+    }
+  };
+
+  useEffect(() => {
+    fetchQueueCount();
+    // Refresh setiap 15 detik
+    const interval = setInterval(fetchQueueCount, 15000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Ambil data user dari localStorage
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -30,7 +52,7 @@ const Sidebar = () => {
     { icon: "ti-gift-card", label: "Loyalty", path: "/app/loyalty" },
     { icon: "ti-chart-pie-2", label: "Segmentation", path: "/app/segmentation" },
     { icon: "ti-speakerphone", label: "Campaigns", path: "/app/campaigns" },
-    { icon: "ti-history", label: "Queue", path: "/app/queue", badge: 3 },
+    { icon: "ti-history", label: "Queue", path: "/app/queue", badge: queueCount },
     { icon: "ti-message-report", label: "Feedback", path: "/app/feedback" },
     {
       icon: "ti-presentation-analytics",
@@ -74,7 +96,7 @@ const Sidebar = () => {
               <span className={isActive ? "font-semibold" : "font-medium"}>
                 {item.label}
               </span>
-              {item.badge && (
+              {item.badge > 0 && (
                 <span className="ml-auto bg-red-500 text-white text-[10px] font-bold px-[6px] py-[1px] rounded-full">
                   {item.badge}
                 </span>

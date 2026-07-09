@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, MoreHorizontal } from "lucide-react";
+import { Search, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 const MemberTable = ({
   members,
@@ -7,6 +7,8 @@ const MemberTable = ({
   searchTerm,
   onSearchChange,
   onRowClick,
+  onEdit,
+  onDelete,
 }) => {
   return (
     <div className="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm">
@@ -82,12 +84,24 @@ const MemberTable = ({
                   {member.points.toLocaleString()} pts
                 </td>
                 <td className="px-6 py-4 text-right">
-                  <button
-                    onClick={(e) => e.stopPropagation()} // Supaya tidak menembus ke onClick miliknya <tr>
-                    className="p-2 text-gray-300 hover:text-[#00403C] hover:bg-white rounded-lg transition-all"
-                  >
-                    <MoreHorizontal size={18} />
-                  </button>
+                  <div className="flex items-center justify-end gap-1">
+                    {onEdit && (
+                      <button
+                        onClick={(e) => onEdit(member, e)}
+                        className="p-1.5 rounded-lg bg-[#00AAA6]/10 text-[#00AAA6] hover:bg-[#00AAA6]/20 transition-colors"
+                      >
+                        <Pencil size={14} />
+                      </button>
+                    )}
+                    {onDelete && (
+                      <button
+                        onClick={(e) => onDelete(member.id, e)}
+                        className="p-1.5 rounded-lg bg-red-50 text-red-400 hover:bg-red-100 transition-colors"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}

@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const API_URL = "https://tukwmveevfnhflsdbtsf.supabase.co/rest/v1/users";
-const API_KEY = "sb_publishable_Tk6yncNjNfa8xU-hgg3xcg_lwSWJRNC";
+const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1a3dtdmVldmZuaGZsc2RidHNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyOTY4OTksImV4cCI6MjA5Nzg3Mjg5OX0.xB6-sY8W5wUFnxHHk6JH3bO9jG9_D_0w0GFJPZjYqgM";
 
 const headers = {
   apikey: API_KEY,
