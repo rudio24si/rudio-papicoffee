@@ -22,10 +22,21 @@ const Sidebar = () => {
 
   useEffect(() => {
     fetchQueueCount();
-    // Refresh setiap 15 detik
-    const interval = setInterval(fetchQueueCount, 15000);
-    return () => clearInterval(interval);
-  }, []);
+
+    // Realtime subscription — update badge langsung saat ada INSERT/UPDATE/DELETE di tabel queue
+    const channel = supabase
+      .channel("queue-badge")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "queue" },
+        () => fetchQueueCount()
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Ambil data user dari localStorage
   const user = JSON.parse(localStorage.getItem("user") || "{}");
