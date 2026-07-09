@@ -10,6 +10,17 @@ export const membersAPI = {
     return data;
   },
 
+  // Fetch satu member langsung by id — selalu data terbaru
+  getById: async (id) => {
+    const { data, error } = await supabase
+      .from("members")
+      .select("*")
+      .eq("id", id)
+      .single();
+    if (error) throw error;
+    return data;
+  },
+
   create: async (payload) => {
     const { data, error } = await supabase
       .from("members")

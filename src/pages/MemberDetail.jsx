@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   ArrowLeft, Mail, Phone, Calendar, Coffee,
-  MessageCircle, Star, Tag, Receipt,
+  MessageCircle, Star, Tag, Receipt, RefreshCw,
 } from "lucide-react";
 import { membersAPI } from "../services/membersAPI";
 import { ordersAPI } from "../services/ordersAPI";
@@ -14,28 +14,30 @@ export default function MemberDetail() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [ordersLoading, setOrdersLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const loadData = async (isRefresh = false) => {
+    if (isRefresh) setRefreshing(true);
+    else setLoading(true);
+    try {
+      const found = await membersAPI.getById(id);
+      setMember(found || null);
+      if (found?.phone) {
+        setOrdersLoading(true);
+        const memberOrders = await ordersAPI.getByPhone(found.phone);
+        setOrders(memberOrders);
+        setOrdersLoading(false);
+      }
+    } catch {
+      setMember(null);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchMember = async () => {
-      try {
-        const all = await membersAPI.getAll();
-        const found = all.find((m) => m.id === id);
-        setMember(found || null);
-
-        // Setelah member ditemukan, fetch riwayat pesanan by nomor HP
-        if (found?.phone) {
-          setOrdersLoading(true);
-          const memberOrders = await ordersAPI.getByPhone(found.phone);
-          setOrders(memberOrders);
-          setOrdersLoading(false);
-        }
-      } catch {
-        setMember(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchMember();
+    loadData();
   }, [id]);
 
   const statusStyle = (status) => {
@@ -67,12 +69,22 @@ export default function MemberDetail() {
 
   return (
     <div className="p-[20px] bg-[#F5F5F5] min-h-full space-y-6">
-      <button
-        onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-[#00AAA6] font-bold text-sm hover:translate-x-[-4px] transition-transform"
-      >
-        <ArrowLeft size={18} /> Kembali ke Daftar Member
-      </button>
+      <div className="flex items-center justify-between">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-[#00AAA6] font-bold text-sm hover:translate-x-[-4px] transition-transform"
+        >
+          <ArrowLeft size={18} /> Kembali ke Daftar Member
+        </button>
+        <button
+          onClick={() => loadData(true)}
+          disabled={refreshing}
+          className="flex items-center gap-1.5 text-xs font-semibold text-[#00AAA6] bg-[#F0FAF9] px-3 py-1.5 rounded-lg hover:bg-[#E0F7F5] transition-colors disabled:opacity-50"
+        >
+          <RefreshCw size={13} className={refreshing ? "animate-spin" : ""} />
+          {refreshing ? "Memuat..." : "Refresh Poin"}
+        </button>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
